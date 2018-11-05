@@ -1,6 +1,4 @@
-`timEScale 1ns / 1ps
-
-module posit_add 
+module posit_mult
 #(
   parameter WORD_SIZE = 32,
   parameter RS        = 5, //$clog2(WORD_SIZE)
