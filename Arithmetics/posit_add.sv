@@ -17,7 +17,7 @@ module posit_add
 );
 
 
-	logic start0= start;
+	logic ready0= ready;
 	logic s1 = in1[WORD_SIZE-1];
 	logic s2 = in2[WORD_SIZE-1];
 	logic zero_tmp1 = |in1[WORD_SIZE-2:0];
@@ -36,8 +36,8 @@ module posit_add
 	logic [WORD_SIZE-ES-1:0] mant1, mant2;
 	logic [WORD_SIZE-1:0] xin1 = s1 ? -in1 : in1;
 	logic [WORD_SIZE-1:0] xin2 = s2 ? -in2 : in2;
-	data_extract #(.WORD_SIZE(WORD_SIZE),.ES(ES)) uut_de1(.in(xin1), .rc(rc1), .regime(regime1), .exp(e1), .mant(mant1), .Lshift(Lshift1));
-	data_extract #(.WORD_SIZE(WORD_SIZE),.ES(ES)) uut_de2(.in(xin2), .rc(rc2), .regime(regime2), .exp(e2), .mant(mant2), .Lshift(Lshift2));
+	data_extract #(.WORD_SIZE(WORD_SIZE),.ES(ES)) uut_de1(.in(xin1), .rc(rc1), .regime(regime1), .exp(e1), .mantissa(mant1), .Lshift(Lshift1));
+	data_extract #(.WORD_SIZE(WORD_SIZE),.ES(ES)) uut_de2(.in(xin2), .rc(rc2), .regime(regime2), .exp(e2), .mantissa(mant2), .Lshift(Lshift2));
 
 	logic [WORD_SIZE-ES:0] m1 = {zero_tmp1,mant1}, 
 		m2 = {zero_tmp2,mant2};
@@ -128,6 +128,6 @@ module posit_add
 	//Final Output
 	logic [2*WORD_SIZE-1:0] tmp1_oN = ls ? -tmp1_o : tmp1_o;
 	assign out = inf|zero|(~DLS_left_out[WORD_SIZE-1]) ? {inf,{WORD_SIZE-1{1'b0}}} : {ls, tmp1_oN[WORD_SIZE-1:1]},
-		done = start0;
+		valid = ready0;
 
 endmodule
