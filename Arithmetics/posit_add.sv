@@ -17,6 +17,7 @@ module posit_add
 );
 
 
+
 	logic ready0= ready;
 	logic s1 = in1[WORD_SIZE-1];
 	logic s2 = in2[WORD_SIZE-1];
